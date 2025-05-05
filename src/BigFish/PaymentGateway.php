@@ -26,7 +26,7 @@ class PaymentGateway
 	/**
 	 * Version
 	 */
-	const VERSION = '4.1.2';
+	const VERSION = '4.1.4';
 
 	/**
 	 * SDK Name
@@ -76,6 +76,7 @@ class PaymentGateway
 	const PROVIDER_WIRECARD_QPAY = 'QPAY';
 	const PROVIDER_WIRECARD = 'Wirecard';
 	const PROVIDER_VIVAWALLET = 'VivaWallet';
+	const PROVIDER_GRANIT = 'Granit';
 
 	/**
 	 * Valid OneClickPayment providers
