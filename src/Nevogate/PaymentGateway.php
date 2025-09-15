@@ -3,7 +3,7 @@
  * Nevogate Payment Gateway (https://www.nevogate.com)
  * PHP SDK
  *
- * @link https://github.com/nevogate/payment-gateway-sdk-php.git
+ * @link https://github.com/nevogate/payment-gateway-sdk-php
  * @copyright (c) 2025, Nevogate Payment Services Ltd.
  */
 
