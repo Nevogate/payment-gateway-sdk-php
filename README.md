@@ -1,12 +1,11 @@
-> Repository github.com/bigfish-hu/payment-gateway-php7-sdk (bigfish/paymentgateway-php7-sdk) is abandoned, you should avoid using it.<br>
+> Repository github.com/pmgw-hu/payment-gateway-php7-sdk (pmgw/payment-gateway-php7-sdk) is abandoned, you should avoid using it.<br>
 ><br>
-> Use https://github.com/pmgw-hu/payment-gateway-php7-sdk ([pmgw/payment-gateway-php7-sdk](https://packagist.org/packages/pmgw/payment-gateway-php7-sdk)) instead.
-
-# Nevogate - PHP7 SDK
+> Use https://github.com/nevogate/payment-gateway-sdk-php ([nevogate/payment-gateway-sdk](https://packagist.org/packages/nevogate/payment-gateway-sdk)) instead.
+# Nevogate Payment Gateway SDK - PHP
 
 ## Version
 
-4.3.0
+1.0.0
 
 ## Requirements
 
@@ -22,7 +21,7 @@ Nevogate Payment Gateway is available at packagist.org, so you can use composer 
 ```yml
 {
     "require": {
-        "pmgw/payment-gateway-php7-sdk": "4.*"
+        "nevogate/payment-gateway-sdk": "1.*"
     }
 }
 ```
@@ -30,16 +29,16 @@ Nevogate Payment Gateway is available at packagist.org, so you can use composer 
 or run
 
 ```sh
-composer require pmgw/payment-gateway-php7-sdk
+composer require nevogate/payment-gateway-sdk
 ```
 
 ## Technical documentation
 
-https://docs.paymentgateway.hu/
+https://docs.nevogate.com/
 
 ## Source code
 
-https://github.com/pmgw-hu/payment-gateway-php7-sdk
+https://github.com/nevogate/payment-gateway-sdk-php
 
 ## Example usage
 

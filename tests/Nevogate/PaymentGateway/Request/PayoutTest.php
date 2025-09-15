@@ -17,7 +17,7 @@ class PayoutTest extends \PHPUnit\Framework\TestCase
 			array('23234', 'setReferenceTransactionId'),
 			array(100, 'setAmount'),
 			array(12345, 'setOrderId'),
-			array('NEVO-TEST-PAYOUT-MESSAGE', 'setAdditionalMessage'),
+			array('NEVOGATE-TEST-PAYOUT-MESSAGE', 'setAdditionalMessage'),
 		);
 	}
 
