@@ -36,29 +36,21 @@ class PaymentGateway
 	/**
 	 * Providers
 	 */
-	const PROVIDER_ABAQOOS = 'ABAQOOS';
 	const PROVIDER_BARION2 = 'Barion2';
 	const PROVIDER_BBARUHITEL = 'BBAruhitel';
 	const PROVIDER_BORGUN = 'Borgun';
 	const PROVIDER_BORGUN2 = 'Borgun2';
 	const PROVIDER_CIB = 'CIB';
-	const PROVIDER_ESCALION = 'Escalion';
-	const PROVIDER_FHB = 'FHB';
 	const PROVIDER_GP = 'GP';
-	const PROVIDER_IPG = 'IPG';
 	const PROVIDER_KHB = 'KHB';
 	const PROVIDER_KHB_SZEP = 'KHBSZEP';
 	const PROVIDER_MKB_SZEP = 'MKBSZEP';
 	const PROVIDER_OTP = 'OTP';
 	const PROVIDER_OTP_EP = 'OTPEP';
-	const PROVIDER_OTP_TWO_PARTY = 'OTP2';
-	const PROVIDER_OTP_MULTIPONT = 'OTPMultipont';
 	const PROVIDER_OTP_SIMPLE = 'OTPSimple';
 	const PROVIDER_OTP_SIMPLE_WIRE = 'OTPSimpleWire';
 	const PROVIDER_OTP_SIMPLE_RTP = 'OTPSimpleRtp';
 	const PROVIDER_OTPARUHITEL = 'OTPAruhitel';
-	const PROVIDER_OTPAY = 'OTPay';
-	const PROVIDER_OTPAY_MASTERPASS = 'OTPayMP';
 	const PROVIDER_PAYPAL = 'PayPal';
 	const PROVIDER_PAYPALREST = 'PayPalRest';
 	const PROVIDER_PAYSAFECARD = 'PSC';
@@ -70,14 +62,11 @@ class PaymentGateway
 	const PROVIDER_RAWMBHSZEP = 'RawMBHSZEP';
 	const PROVIDER_RAWOTPSZEP = 'RawOTPSZEP';
 	const PROVIDER_SAFERPAY = 'Saferpay';
-	const PROVIDER_SMS = 'SMS';
-	const PROVIDER_SOFORT = 'Sofort';
 	const PROVIDER_STRIPE = 'Stripe';
-	const PROVIDER_UNICREDIT = 'UniCredit';
-	const PROVIDER_VIRPAY = 'Virpay';
 	const PROVIDER_WIRECARD_QPAY = 'QPAY';
-	const PROVIDER_WIRECARD = 'Wirecard';
+	const PROVIDER_RAIFFEISENUPC = 'RaiffeisenUPC';
 	const PROVIDER_VIVAWALLET = 'VivaWallet';
+	const PROVIDER_GRANIT = 'Granit';
 
 	/**
 	 * Valid OneClickPayment providers
@@ -85,7 +74,6 @@ class PaymentGateway
 	 * @var array
 	 */
 	public static $oneClickProviders = [
-		PaymentGateway::PROVIDER_ESCALION,
 		PaymentGateway::PROVIDER_OTP_SIMPLE,
 		PaymentGateway::PROVIDER_SAFERPAY,
 		PaymentGateway::PROVIDER_PAYPAL,
@@ -94,14 +82,15 @@ class PaymentGateway
 		PaymentGateway::PROVIDER_BORGUN2,
 		PaymentGateway::PROVIDER_PAYUREST,
 		PaymentGateway::PROVIDER_GP,
-		PaymentGateway::PROVIDER_VIRPAY,
-		PaymentGateway::PROVIDER_WIRECARD,
 		PaymentGateway::PROVIDER_VIVAWALLET,
 		PaymentGateway::PROVIDER_KHB,
 		PaymentGateway::PROVIDER_CIB,
+		PaymentGateway::PROVIDER_RAIFFEISENUPC,
 		PaymentGateway::PROVIDER_RAWMBHSZEP,
 		PaymentGateway::PROVIDER_RAWOTPSZEP,
 		PaymentGateway::PROVIDER_RAWKHBSZEP,
+		PaymentGateway::PROVIDER_RAIFFEISENPAY,
+		PaymentGateway::PROVIDER_OTP_SIMPLE_RTP,
 	];
 
 	/**

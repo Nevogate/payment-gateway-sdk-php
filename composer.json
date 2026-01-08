@@ -1,6 +1,7 @@
 {
 	"name": "nevogate/payment-gateway-sdk",
 	"description": "Nevogate Payment Gateway SDK",
+	"version": "1.0.0",
 	"type": "library",
 	"keywords": ["payment", "ecommerce", "webshop", "php", "sdk"],
 	"homepage": "https://www.nevogate.com/",
