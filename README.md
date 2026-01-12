@@ -5,7 +5,7 @@
 
 ## Version
 
-5.0.0-RC1
+5.0.0-rc.1
 
 ## Requirements
 
