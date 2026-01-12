@@ -21,7 +21,7 @@ Nevogate Payment Gateway is available at packagist.org, so you can use composer 
 ```yml
 {
     "require": {
-        "nevogate/payment-gateway-sdk": "1.*"
+        "nevogate/payment-gateway-sdk": "5.*"
     }
 }
 ```
