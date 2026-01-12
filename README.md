@@ -1,12 +1,11 @@
-> Repository github.com/bigfish-hu/payment-gateway-php7-sdk (bigfish/paymentgateway-php7-sdk) is abandoned, you should avoid using it.<br>
+> Repository github.com/pmgw-hu/payment-gateway-php7-sdk (pmgw/payment-gateway-php7-sdk) is abandoned, you should avoid using it.<br>
 ><br>
-> Use https://github.com/pmgw-hu/payment-gateway-php7-sdk ([pmgw/payment-gateway-php7-sdk](https://packagist.org/packages/pmgw/payment-gateway-php7-sdk)) instead.
-
-# BIG FISH Payment Gateway - PHP7 SDK
+> Use https://github.com/nevogate/payment-gateway-sdk-php ([nevogate/payment-gateway-sdk](https://packagist.org/packages/nevogate/payment-gateway-sdk)) instead.
+# Nevogate Payment Gateway SDK - PHP
 
 ## Version
 
-4.4.4
+5.0.0
 
 ## Requirements
 
@@ -17,12 +16,12 @@
 
 ## Installation
 
-BIG FISH Payment Gateway is available at packagist.org, so you can use composer to download this library.
+Nevogate Payment Gateway is available at packagist.org, so you can use composer to download this library.
 
 ```yml
 {
     "require": {
-        "pmgw/payment-gateway-php7-sdk": "dev-testing"
+        "nevogate/payment-gateway-sdk": "5.0.0-beta.1"
     }
 }
 ```
@@ -30,36 +29,36 @@ BIG FISH Payment Gateway is available at packagist.org, so you can use composer 
 or run
 
 ```sh
-composer require pmgw/payment-gateway-php7-sdk:dev-testing
+composer require nevogate/payment-gateway-sdk:5.0.0-beta.1
 ```
 
 ## Technical documentation
 
-https://docs.paymentgateway.hu/
+https://docs.nevogate.com/
 
 ## Source code
 
-https://github.com/pmgw-hu/payment-gateway-php7-sdk/tree/testing
+https://github.com/nevogate/payment-gateway-sdk-php/tree/testing
 
 ## Example usage
 
 ### Basic configuration
 
 ```php
-$config = new \BigFish\PaymentGateway\Config();
+$config = new \Nevogate\PaymentGateway\Config();
 $config->storeName = "example store name";
 $config->apiKey = "ExamPleApiKey";
 $config->encryptPublicKey = "publicKeyGoesHere";
 $config->testMode = true;
 
-$paymentGateway = new \BigFish\PaymentGateway($config);
+$paymentGateway = new \Nevogate\PaymentGateway($config);
 ```
 
 ### Init request
 
 ```php
-$init = new \BigFish\PaymentGateway\Request\Init();
-$init->setProviderName(\BigFish\PaymentGateway::PROVIDER_CIB) // the chosen payment method
+$init = new \Nevogate\PaymentGateway\Request\Init();
+$init->setProviderName(\Nevogate\PaymentGateway::PROVIDER_CIB) // the chosen payment method
     ->setResponseUrl('http://your.companys.webshop.url/payment_gateway_response') // callback url
     ->setAmount(1234)
     ->setCurrency('HUF')
@@ -78,7 +77,7 @@ if (!$response->ResultCode == "SUCCESSFUL" || !$response->TransactionId) {
 }
 
 $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\Start())->setTransactionId($response->TransactionId)
+        (new \Nevogate\PaymentGateway\Request\Start())->setTransactionId($response->TransactionId)
     );
 ```
 
@@ -86,7 +85,7 @@ $paymentGateway->send(
 
 ```php
 $result = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\Result())->setTransactionId($_GET['TransactionId'])
+        (new \Nevogate\PaymentGateway\Request\Result())->setTransactionId($_GET['TransactionId'])
     );
 ```
 
@@ -94,7 +93,7 @@ $result = $paymentGateway->send(
 
 ```php
 $details = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\Details())->setTransactionId($_GET['TransactionId'])
+        (new \Nevogate\PaymentGateway\Request\Details())->setTransactionId($_GET['TransactionId'])
     );
 ```
 
@@ -102,7 +101,7 @@ $details = $paymentGateway->send(
 
 ```php
 $response = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\Close())->setTransactionId($transactionId)
+        (new \Nevogate\PaymentGateway\Request\Close())->setTransactionId($transactionId)
     );
 ```
 
@@ -110,7 +109,7 @@ $response = $paymentGateway->send(
 
 ```php
 $response = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\Refund())
+        (new \Nevogate\PaymentGateway\Request\Refund())
             ->setTransactionId($transactionId)
             ->setAmount(100)
     );
@@ -119,12 +118,12 @@ $response = $paymentGateway->send(
 #### Payout request
 
 ```php
-$payout = new \BigFish\PaymentGateway\Request\Payout();
-$payout->setPayoutType(\BigFish\PaymentGateway::PAYOUT_TYPE_FUNDS_DISBURSEMENT)
+$payout = new \Nevogate\PaymentGateway\Request\Payout();
+$payout->setPayoutType(\Nevogate\PaymentGateway::PAYOUT_TYPE_FUNDS_DISBURSEMENT)
     ->setReferenceTransactionId("783593c87fee4d372f47f53840028682")
     ->setAmount(200)
-    ->setOrderId("BF-TEST-ORDER-REG") // your custom order id
-    ->setAdditionalMessage("BF-TEST-PAYOUT-MESSAGE");
+    ->setOrderId("NEVOGATE-TEST-ORDER-REG") // your custom order id
+    ->setAdditionalMessage("NEVOGATE-TEST-PAYOUT-MESSAGE");
 
 $response = $paymentGateway->send($payout);
 ```
@@ -133,8 +132,8 @@ $response = $paymentGateway->send($payout);
 
 ```php
 $response = $paymentGateway->send(
-    (new \BigFish\PaymentGateway\Request\GetPaymentRegistrations())
-        ->setProviderName(\BigFish\PaymentGateway::PROVIDER_BARION2)
+    (new \Nevogate\PaymentGateway\Request\GetPaymentRegistrations())
+        ->setProviderName(\Nevogate\PaymentGateway::PROVIDER_BARION2)
         ->setUserId('User1')
     );
 ```
@@ -143,7 +142,7 @@ $response = $paymentGateway->send(
 
 ```php
 $response = $paymentGateway->send(
-    (new \BigFish\PaymentGateway\Request\GetPaymentRegistration())
+    (new \Nevogate\PaymentGateway\Request\GetPaymentRegistration())
         ->setTransactionId($transactionId)
 );
 ```
@@ -152,7 +151,7 @@ $response = $paymentGateway->send(
 
 ```php
 $response = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\CancelPaymentRegistration())->setTransactionId($transactionId)
+        (new \Nevogate\PaymentGateway\Request\CancelPaymentRegistration())->setTransactionId($transactionId)
     );
 ```
 
@@ -160,8 +159,8 @@ $response = $paymentGateway->send(
 
 ```php
 $response = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\CancelAllPaymentRegistrations())
-            ->setProviderName(\BigFish\PaymentGateway::PROVIDER_BORGUN2)
+        (new \Nevogate\PaymentGateway\Request\CancelAllPaymentRegistrations())
+            ->setProviderName(\Nevogate\PaymentGateway::PROVIDER_BORGUN2)
             ->setUserId('userId')
     );
 ```
@@ -169,13 +168,13 @@ $response = $paymentGateway->send(
 ### Init Recurring Payment - InitRP
 
 ```php
-$initRP = new \BigFish\PaymentGateway\Request\InitRP();
+$initRP = new \Nevogate\PaymentGateway\Request\InitRP();
 $initRP->setReferenceTransactionId("783593c87fee4d372f47f53840028682")
     ->setResponseUrl("http://your.companys.webshop.url/payment_gateway_response") // callback url
     ->setAmount(200)
     ->setCurrency("HUF")
-    ->setOrderId("BF-TEST-ORDER-REG") // your custom order id
-    ->setUserId("BF-TEST-USER-REG");
+    ->setOrderId("NEVOGATE-TEST-ORDER-REG") // your custom order id
+    ->setUserId("NEVOGATE-TEST-USER-REG");
 
 $response = $paymentGateway->send($initRP);
 ```
@@ -188,15 +187,15 @@ if (!$response->ResultCode == "SUCCESSFUL" || !$response->TransactionId) {
 }
 
 $result = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\StartRP())->setTransactionId($response->TransactionId)
+        (new \Nevogate\PaymentGateway\Request\StartRP())->setTransactionId($response->TransactionId)
     );
 ```
 
 ### Create Payment Link - PaymentLinkCreate
 
 ```php
-$paymentLink = new \BigFish\PaymentGateway\Request\PaymentLinkCreate();
-$paymentLink->setProviderName(\BigFish\PaymentGateway::PROVIDER_CIB) // the chosen payment method
+$paymentLink = new \Nevogate\PaymentGateway\Request\PaymentLinkCreate();
+$paymentLink->setProviderName(\Nevogate\PaymentGateway::PROVIDER_CIB) // the chosen payment method
     ->setAmount(1234)
     ->setCurrency('HUF')
     ->setOrderId('ORD-1234') // your custom order id
@@ -210,7 +209,7 @@ $response = $paymentGateway->send($paymentLink);
 
 ```php
 $response = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\PaymentLinkCancel())->setPaymentLinkName($paymentLinkName)
+        (new \Nevogate\PaymentGateway\Request\PaymentLinkCancel())->setPaymentLinkName($paymentLinkName)
     );
 ```
 
@@ -218,7 +217,7 @@ $response = $paymentGateway->send(
 
 ```php
 $response = $paymentGateway->send(
-        (new \BigFish\PaymentGateway\Request\PaymentLinkDetails())->setPaymentLinkName($paymentLinkName)
+        (new \Nevogate\PaymentGateway\Request\PaymentLinkDetails())->setPaymentLinkName($paymentLinkName)
     );
 ```
 
@@ -227,16 +226,16 @@ $response = $paymentGateway->send(
 #### Basic usage
 
 ```php
-$infoObject = new \BigFish\PaymentGateway\Data\Info();
+$infoObject = new \Nevogate\PaymentGateway\Data\Info();
 
-$infoCustomerGeneral = new \BigFish\PaymentGateway\Data\Info\Customer\InfoCustomerGeneral();
+$infoCustomerGeneral = new \Nevogate\PaymentGateway\Data\Info\Customer\InfoCustomerGeneral();
 $infoCustomerGeneral->setFirstName("John")
     ->setLastName("Doe")
     ->setEmail("test@testmail.com");
 
 $infoObject->setObject($infoCustomerGeneral); //add $infoCustomerGeneral to $infoObject
  
-$infoShipping = new \BigFish\PaymentGateway\Data\Info\Order\InfoOrderShippingData();
+$infoShipping = new \Nevogate\PaymentGateway\Data\Info\Order\InfoOrderShippingData();
 $infoShipping->setFirstName("John")
     ->setLastName("Doe")
     ->setEmail("test@testmail.com")
@@ -246,7 +245,7 @@ $infoShipping->setFirstName("John")
 
 $infoObject->setObject($infoShipping); //add $infoShipping to $infoObject
  
-$infoOrderProductItem = new \BigFish\PaymentGateway\Data\Info\Order\InfoOrderProductItem();
+$infoOrderProductItem = new \Nevogate\PaymentGateway\Data\Info\Order\InfoOrderProductItem();
 $infoOrderProductItem->setSku("PMG055005")
     ->setName("Product11")
     ->setQuantity("10")
@@ -257,7 +256,7 @@ $infoOrderProductItem->setSku("PMG055005")
 
 $infoObject->setObject($infoOrderProductItem); //add $infoOrderProductItem to $infoObject
  
-$infoOrderProductItem = new \BigFish\PaymentGateway\Data\Info\Order\InfoOrderProductItem();
+$infoOrderProductItem = new \Nevogate\PaymentGateway\Data\Info\Order\InfoOrderProductItem();
 $infoOrderProductItem->setSku("PMG055008")
     ->setName("Product12")
     ->setQuantity("10")
