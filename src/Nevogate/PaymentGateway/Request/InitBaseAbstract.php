@@ -18,10 +18,10 @@ abstract class InitBaseAbstract extends RequestAbstract
 	}
 
 	/**
-	 * @param string $providerName
+	 * @param ?string $providerName
 	 * @return $this
 	 */
-	public function setProviderName(string $providerName): self
+	public function setProviderName(?string $providerName): self
 	{
 		return $this->setData($providerName, 'providerName');
 	}
