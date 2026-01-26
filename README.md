@@ -29,7 +29,7 @@ Nevogate Payment Gateway is available at packagist.org, so you can use composer 
 or run
 
 ```sh
-composer require nevogate/payment-gateway-sdk:5.0.0-beta.2
+composer require nevogate/payment-gateway-sdk:^5.0@dev
 ```
 
 ## Technical documentation
