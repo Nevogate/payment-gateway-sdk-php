@@ -34,8 +34,6 @@ class WalletTest extends \PHPUnit\Framework\TestCase
 			array(Wallet::ENVIRONMENT_WEB, 'setEnvironment', 'Environment'),
 			array('https://apple-pay-gateway.apple.com/paymentservices/startSession', 'setValidationUrl', 'ValidationUrl'),
 			array('https://demo.nevogate.com', 'setShopUrl', 'ShopUrl'),
-			array('google-token', 'setGooglePayToken', 'GooglePayToken'),
-			array('apple-token', 'setApplePayToken', 'ApplePayToken'),
 			array('buyer@example.com', 'setPayerEmailAddress', 'PayerEmailAddress'),
 		);
 	}

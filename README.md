@@ -5,7 +5,7 @@
 
 ## Version
 
-5.3.0
+5.4.0
 
 ## Requirements
 
@@ -191,12 +191,42 @@ $result = $paymentGateway->send(
     );
 ```
 
+#### Native Google Pay wallet flow
+
+`InitWallet` carries the wallet metadata only; the Google Pay token is sent
+later, in `StartWallet`.
+
+```php
+$initWallet = (new \Nevogate\PaymentGateway\Data\Wallet())
+    ->setType(\Nevogate\PaymentGateway\Data\Wallet::TYPE_GOOGLE_PAY)
+    ->setEnvironment(\Nevogate\PaymentGateway\Data\Wallet::ENVIRONMENT_WEB)
+    ->setPayerEmailAddress($payerEmailAddress);
+
+$initRequest = (new \Nevogate\PaymentGateway\Request\InitWallet())
+    // Set the regular Init fields here (provider, amount, URLs, order data, ...).
+    ->setWallet($initWallet);
+```
+
 #### StartWallet request
+
+##### Apple Pay
 
 ```php
 $response = $paymentGateway->send(
-        (new \Nevogate\PaymentGateway\Request\StartWallet())->setTransactionId($transactionId)
-    );
+    (new \Nevogate\PaymentGateway\Request\StartWallet())
+        ->setTransactionId($transactionId)
+        ->setToken($applePayToken)
+);
+```
+
+##### Google Pay
+
+```php
+$response = $paymentGateway->send(
+    (new \Nevogate\PaymentGateway\Request\StartWallet())
+        ->setTransactionId($transactionId)
+        ->setToken($googlePayToken)
+);
 ```
 
 #### CompleteWallet request
@@ -204,30 +234,6 @@ $response = $paymentGateway->send(
 ```php
 $response = $paymentGateway->send(
         (new \Nevogate\PaymentGateway\Request\CompleteWallet())->setTransactionId($transactionId)
-    );
-```
-
-#### ValidateWalletSession request (Apple Pay only)
-
-This endpoint is Apple Pay specific. The `ValidationUrl` must be the `event.validationURL` value
-received in the browser-side `ApplePaySession` `onvalidatemerchant` event — it is issued by Apple
-dynamically and is not a fixed value. Forward it to the backend and pass it to the SDK; the payment
-provider then uses it to request the signed merchant session payload from Apple.
-
-This call is **not required for Google Pay** (Google Pay has no merchant validation step).
-
-```php
-$response = $paymentGateway->send(
-        (new \Nevogate\PaymentGateway\Request\ValidateWalletSession())
-            ->setProviderName('Barion2')
-            ->setCurrency('HUF')
-            ->setWallet(
-                (new \Nevogate\PaymentGateway\Data\Wallet())
-                    ->setType(\Nevogate\PaymentGateway\Data\Wallet::TYPE_APPLE_PAY)
-                    ->setEnvironment(\Nevogate\PaymentGateway\Data\Wallet::ENVIRONMENT_WEB)
-                    ->setValidationUrl($validationUrl) // received from Apple in the onvalidatemerchant event
-                    ->setShopUrl('https://demo.nevogate.com')
-            )
     );
 ```
 
