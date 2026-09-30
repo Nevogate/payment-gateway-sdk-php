@@ -95,14 +95,12 @@ class InitWalletTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @test
+	 * @expectedException \Nevogate\PaymentGateway\Exception\PaymentGatewayException
 	 */
 	public function setAmount_isZero()
 	{
-		$amount = 0;
-
 		$request = $this->getRequest();
-		$request->setAmount($amount);
-		$this->assertEquals($amount, $request->getData()['amount']);
+		$request->setAmount(0);
 	}
 
 	/**
@@ -123,7 +121,6 @@ class InitWalletTest extends \PHPUnit\Framework\TestCase
 		$wallet = (new Wallet())
 			->setType(Wallet::TYPE_GOOGLE_PAY)
 			->setEnvironment(Wallet::ENVIRONMENT_WEB)
-			->setGooglePayToken('google-token')
 			->setPayerEmailAddress('buyer@example.com');
 
 		$request = (new InitWallet())->setWallet($wallet);

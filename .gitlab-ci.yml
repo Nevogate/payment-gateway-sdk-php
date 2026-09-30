@@ -14,8 +14,7 @@ Syntax check php7.3:
 Copy paste detection:
   image: php:7.3
   script:
-    - apt-get update && apt-get install -y wget
-    - wget https://phar.phpunit.de/phpcpd.phar
+    - curl -sSL https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
     - php phpcpd.phar ./src/
   stage: build
   allow_failure: true

@@ -61,8 +61,7 @@ class SystemTransport
 			$request instanceof PaymentGateway\Request\OneClickTokenCancelAll ||
 			$request instanceof PaymentGateway\Request\CancelAllPaymentRegistrations ||
 			$request instanceof PaymentGateway\Request\Settlement ||
-			$request instanceof PaymentGateway\Request\SettlementRefund ||
-			$request instanceof PaymentGateway\Request\ValidateWalletSession
+			$request instanceof PaymentGateway\Request\SettlementRefund
 		) {
 			$request->setStoreName($this->config->getStoreName());
 		}
