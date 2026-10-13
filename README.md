@@ -5,7 +5,7 @@
 
 ## Version
 
-5.3.0
+5.4.0
 
 ## Requirements
 
@@ -189,6 +189,52 @@ if (!$response->ResultCode == "SUCCESSFUL" || !$response->TransactionId) {
 
 $result = $paymentGateway->send(
         (new \Nevogate\PaymentGateway\Request\StartRP())->setTransactionId($response->TransactionId)
+    );
+```
+
+#### Native Google Pay wallet flow
+
+`InitWallet` carries the wallet metadata only; the Google Pay token is sent
+later, in `StartWallet`.
+
+```php
+$initWallet = (new \Nevogate\PaymentGateway\Data\Wallet())
+    ->setType(\Nevogate\PaymentGateway\Data\Wallet::TYPE_GOOGLE_PAY)
+    ->setEnvironment(\Nevogate\PaymentGateway\Data\Wallet::ENVIRONMENT_WEB)
+    ->setPayerEmailAddress($payerEmailAddress);
+
+$initRequest = (new \Nevogate\PaymentGateway\Request\InitWallet())
+    // Set the regular Init fields here (provider, amount, URLs, order data, ...).
+    ->setWallet($initWallet);
+```
+
+#### StartWallet request
+
+##### Apple Pay
+
+```php
+$response = $paymentGateway->send(
+    (new \Nevogate\PaymentGateway\Request\StartWallet())
+        ->setTransactionId($transactionId)
+        ->setToken($applePayToken)
+);
+```
+
+##### Google Pay
+
+```php
+$response = $paymentGateway->send(
+    (new \Nevogate\PaymentGateway\Request\StartWallet())
+        ->setTransactionId($transactionId)
+        ->setToken($googlePayToken)
+);
+```
+
+#### CompleteWallet request
+
+```php
+$response = $paymentGateway->send(
+        (new \Nevogate\PaymentGateway\Request\CompleteWallet())->setTransactionId($transactionId)
     );
 ```
 
