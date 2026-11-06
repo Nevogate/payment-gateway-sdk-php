@@ -26,7 +26,7 @@ class PaymentGateway
 	/**
 	 * Version
 	 */
-	const VERSION = '4.5.0';
+	const VERSION = '4.6.0';
 
 	/**
 	 * SDK Name
@@ -62,6 +62,7 @@ class PaymentGateway
 	const PROVIDER_RAWKHBSZEP = 'RawKHBSZEP';
 	const PROVIDER_RAWMBHSZEP = 'RawMBHSZEP';
 	const PROVIDER_RAWOTPSZEP = 'RawOTPSZEP';
+	const PROVIDER_REVOLUT = 'Revolut';
 	const PROVIDER_SAFERPAY = 'Saferpay';
 	const PROVIDER_STRIPE = 'Stripe';
 	const PROVIDER_WIRECARD_QPAY = 'QPAY';
@@ -92,6 +93,7 @@ class PaymentGateway
 		PaymentGateway::PROVIDER_RAWOTPSZEP,
 		PaymentGateway::PROVIDER_RAWKHBSZEP,
 		PaymentGateway::PROVIDER_RAIFFEISENPAY,
+		PaymentGateway::PROVIDER_REVOLUT,
 		PaymentGateway::PROVIDER_OTP_SIMPLE_RTP,
 	];
 
