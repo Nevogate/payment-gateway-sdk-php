@@ -35,6 +35,8 @@ class WalletTest extends \PHPUnit\Framework\TestCase
 			array('https://apple-pay-gateway.apple.com/paymentservices/startSession', 'setValidationUrl', 'ValidationUrl'),
 			array('https://demo.nevogate.com', 'setShopUrl', 'ShopUrl'),
 			array('buyer@example.com', 'setPayerEmailAddress', 'PayerEmailAddress'),
+			array(true, 'setSessionValidated', 'SessionValidated'),
+			array(false, 'setSessionValidated', 'SessionValidated'),
 		);
 	}
 
@@ -72,5 +74,14 @@ class WalletTest extends \PHPUnit\Framework\TestCase
 	{
 		$this->expectException(\Nevogate\PaymentGateway\Exception\PaymentGatewayException::class);
 		(new Wallet())->setShopUrl('invalidUrl');
+	}
+
+	/**
+	 * @test
+	 */
+	public function setPayerEmailAddress_invalidEmail()
+	{
+		$this->expectException(\Nevogate\PaymentGateway\Exception\PaymentGatewayException::class);
+		(new Wallet())->setPayerEmailAddress('invalidEmail');
 	}
 }

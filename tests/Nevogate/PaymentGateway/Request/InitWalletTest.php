@@ -95,20 +95,20 @@ class InitWalletTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @test
-	 * @expectedException \Nevogate\PaymentGateway\Exception\PaymentGatewayException
 	 */
 	public function setAmount_isZero()
 	{
+		$this->expectException(\Nevogate\PaymentGateway\Exception\PaymentGatewayException::class);
 		$request = $this->getRequest();
 		$request->setAmount(0);
 	}
 
 	/**
 	 * @test
-	 * @expectedException \Nevogate\PaymentGateway\Exception\PaymentGatewayException
 	 */
 	public function setNotificationUrl_invalidUrl()
 	{
+		$this->expectException(\Nevogate\PaymentGateway\Exception\PaymentGatewayException::class);
 		$request = $this->getRequest();
 		$request->setNotificationUrl('invalidUrl');
 	}
@@ -126,5 +126,21 @@ class InitWalletTest extends \PHPUnit\Framework\TestCase
 		$request = (new InitWallet())->setWallet($wallet);
 
 		$this->assertEquals($wallet->getUcFirstData(), $request->getData()['wallet']);
+	}
+
+	/**
+	 * @test
+	 */
+	public function setWallet_applePaySessionValidated()
+	{
+		$wallet = (new Wallet())
+			->setType(Wallet::TYPE_APPLE_PAY)
+			->setEnvironment(Wallet::ENVIRONMENT_WEB)
+			->setSessionValidated();
+
+		$request = (new InitWallet())->setWallet($wallet);
+
+		$this->assertSame(true, $request->getData()['wallet']['SessionValidated']);
+		$this->assertArrayNotHasKey('ValidationUrl', $request->getData()['wallet']);
 	}
 }

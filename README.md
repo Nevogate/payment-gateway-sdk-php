@@ -5,7 +5,7 @@
 
 ## Version
 
-5.5.0
+5.6.0
 
 ## Requirements
 
@@ -205,6 +205,72 @@ $initWallet = (new \Nevogate\PaymentGateway\Data\Wallet())
 
 $initRequest = (new \Nevogate\PaymentGateway\Request\InitWallet())
     // Set the regular Init fields here (provider, amount, URLs, order data, ...).
+    ->setWallet($initWallet);
+```
+
+#### Native Apple Pay wallet flow
+
+By default `InitWallet` performs the Apple Pay merchant validation: send it from the
+`onvalidatemerchant` event with the `ValidationUrl` (the `event.validationURL` issued by Apple)
+and the `ShopUrl`, and pass the returned `ApplePaySessionResponse` to
+`session.completeMerchantValidation()`. The Apple Pay token is sent later, in `StartWallet`.
+
+```php
+$initWallet = (new \Nevogate\PaymentGateway\Data\Wallet())
+    ->setType(\Nevogate\PaymentGateway\Data\Wallet::TYPE_APPLE_PAY)
+    ->setEnvironment(\Nevogate\PaymentGateway\Data\Wallet::ENVIRONMENT_WEB)
+    ->setValidationUrl($validationUrl) // received from Apple in the onvalidatemerchant event
+    ->setShopUrl('https://demo.nevogate.com');
+
+$initRequest = (new \Nevogate\PaymentGateway\Request\InitWallet())
+    // Set the regular Init fields here (provider, amount, URLs, order data, ...).
+    ->setWallet($initWallet);
+```
+
+#### ValidateWalletSession request (Apple Pay, Barion2 only)
+
+For a fast checkout, where the final amount and the contact data are known only after the
+payment sheet is authorized, the merchant validation can be requested separately, without
+creating a transaction. Send it from the `onvalidatemerchant` event and pass the returned
+`ApplePaySessionResponse` to `session.completeMerchantValidation()`.
+
+```php
+$response = $paymentGateway->send(
+        (new \Nevogate\PaymentGateway\Request\ValidateWalletSession())
+            ->setProviderName(\Nevogate\PaymentGateway::PROVIDER_BARION2)
+            ->setCurrency('HUF')
+            ->setAutoCommit(true) // must match the later InitWallet, see below
+            ->setWallet(
+                (new \Nevogate\PaymentGateway\Data\Wallet())
+                    ->setType(\Nevogate\PaymentGateway\Data\Wallet::TYPE_APPLE_PAY)
+                    ->setEnvironment(\Nevogate\PaymentGateway\Data\Wallet::ENVIRONMENT_WEB)
+                    ->setValidationUrl($validationUrl) // received from Apple in the onvalidatemerchant event
+                    ->setShopUrl('https://demo.nevogate.com')
+            )
+    );
+```
+
+The currency and the auto commit select the store provider (e.g. the Barion POSKey of the merchant
+session), so they must be the same as in the later `InitWallet`; an omitted auto commit means `true`.
+
+Then, in the `onpaymentauthorized` event, send the `InitWallet` with the final amount and order
+data, and with `setSessionValidated(true)` - the merchant session already exists, so no new one
+is requested. Finally send the `StartWallet` with the Apple Pay token.
+
+**Without `setSessionValidated(true)` the `InitWallet` performs the merchant validation again and
+requires the `ValidationUrl`.** `setSessionValidated(true)` is accepted only for Barion2 Apple Pay;
+any other provider or wallet type rejects it. `setSessionValidated(false)` is the same as not setting
+it, so it is accepted everywhere.
+
+```php
+$initWallet = (new \Nevogate\PaymentGateway\Data\Wallet())
+    ->setType(\Nevogate\PaymentGateway\Data\Wallet::TYPE_APPLE_PAY)
+    ->setEnvironment(\Nevogate\PaymentGateway\Data\Wallet::ENVIRONMENT_WEB)
+    ->setSessionValidated(true);
+
+$initRequest = (new \Nevogate\PaymentGateway\Request\InitWallet())
+    ->setProviderName(\Nevogate\PaymentGateway::PROVIDER_BARION2)
+    // Set the regular Init fields here (amount, URLs, order data, Info, ...).
     ->setWallet($initWallet);
 ```
 
