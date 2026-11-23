@@ -12,6 +12,7 @@ class Wallet extends BaseAbstract
 	const VALIDATION_URL = 'validationUrl';
 	const SHOP_URL = 'shopUrl';
 	const PAYER_EMAIL_ADDRESS = 'payerEmailAddress';
+	const SESSION_VALIDATED = 'sessionValidated';
 
 	const TYPE_APPLE_PAY = 'apple_pay';
 	const TYPE_GOOGLE_PAY = 'google_pay';
@@ -72,10 +73,26 @@ class Wallet extends BaseAbstract
 	/**
 	 * @param string $payerEmailAddress
 	 * @return self
+	 * @throws PaymentGatewayException
 	 */
 	public function setPayerEmailAddress(string $payerEmailAddress): self
 	{
+		if (filter_var($payerEmailAddress, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE) === false) {
+			throw new PaymentGatewayException('Invalid payer email address');
+		}
+
 		return $this->setData($payerEmailAddress, self::PAYER_EMAIL_ADDRESS);
+	}
+
+	/**
+	 * Merchant session already created with ValidateWalletSession (Barion2 Apple Pay only).
+	 *
+	 * @param bool $sessionValidated
+	 * @return self
+	 */
+	public function setSessionValidated(bool $sessionValidated = true): self
+	{
+		return $this->setData($sessionValidated, self::SESSION_VALIDATED);
 	}
 
 }
